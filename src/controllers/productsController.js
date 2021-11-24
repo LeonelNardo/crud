@@ -25,28 +25,32 @@ const controller = {
 	},
 
 	// Create - Form to create
-	create: (req, res) => {
-		// Do the magic
+	create: (req, res) => {res.render("product-create-form")
 	},
 	
 	// Create -  Method to store
-	store: (req, res) => {
+	store: (req, res) => {res.send("terminamos la prixima")
 		// Do the magic
 	},
 
 	// Update - Form to edit
-	edit: (req, res) => {
+	edit: (req, res) => {const idProduct= req.params.id;
+
+		const show=products.find((prod)=>{return prod.id==idProduct});
+		
+		res.render("product-edit-form", {show : show} )
+
 		// Do the magic
 	},
 	// Update - Method to update
-	update: (req, res) => {
+	update: (req, res) => {res.send("terminamos la prixima")
 		// Do the magic
 	},
 
 	// Delete - Delete one product from DB
-	destroy : (req, res) => {
+	destroy : (req, res) => {res.send("terminamos la prixima")
 		// Do the magic
-	}
-};
+	
+}}
 
 module.exports = controller;
