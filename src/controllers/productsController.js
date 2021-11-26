@@ -4,7 +4,20 @@ const path = require('path');
 const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
 const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
+function saveList(){
+
+const 	newList=JSON.stringify(products, null, 4);
+
+fs.writeFileSync(productsFilePath, newList);
+
+}
+
+
+
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+
+
 
 const controller = {
 	// Root - Show all products
@@ -29,7 +42,15 @@ const controller = {
 	},
 	
 	// Create -  Method to store
-	store: (req, res) => {res.send("terminamos la prixima")
+	store: (req, res) => {
+		
+		const newProduct= {id : Date.now(), ...req.body}
+		
+		products.push(newProduct);
+
+		saveList();
+
+		res.redirect("/products")
 		// Do the magic
 	},
 
@@ -43,7 +64,21 @@ const controller = {
 		// Do the magic
 	},
 	// Update - Method to update
-	update: (req, res) => {res.send("terminamos la prixima")
+	update: (req, res) => {
+		
+		const idProduct= req.params.id;
+	
+		const show=products.find((prod)=>{return prod.id==idProduct});
+
+	show.category=req.body.category;
+	show.name=req.body.name;
+	show.description=req.body.description;
+	show.price=req.body.price;
+	show.discount=req.body.discount;
+	
+	saveList();
+
+	res.redirect("/products/"+ show.id);
 		// Do the magic
 	},
 
