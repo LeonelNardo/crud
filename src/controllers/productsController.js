@@ -83,9 +83,17 @@ const controller = {
 	},
 
 	// Delete - Delete one product from DB
-	destroy : (req, res) => {res.send("terminamos la prixima")
+	destroy : (req, res) => {
 		// Do the magic
-	
+		const idProduct= req.params.id;
+
+		const index = products.findIndex((prod)=> {prod.id == idProduct});
+
+		products.splice(index, 1);
+
+		saveList();
+
+		res.redirect("/products");
 }}
 
 module.exports = controller;
